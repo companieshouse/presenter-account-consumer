@@ -6,7 +6,7 @@ locals {
   service_name               = "presenter-account-consumer"
   container_port             = "3000" # default port required here until prod docker container is built allowing port change via env var
   docker_repo                = "presenter-account-consumer"
-  lb_listener_rule_priority  = 11
+  lb_listener_rule_priority  = 12
   lb_listener_paths          = ["/presenter-account-consumer/*"]
   healthcheck_path           = "/presenter-account-consumer/healthcheck" #healthcheck path for presenter-account-consumer
   healthcheck_matcher        = "200"
