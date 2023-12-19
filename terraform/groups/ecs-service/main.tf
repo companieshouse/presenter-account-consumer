@@ -54,7 +54,6 @@ module "ecs-service" {
   name_prefix               = local.name_prefix
   use_fargate               = var.use_fargate
   fargate_subnets           = local.application_subnet_ids
-  service_autoscale_enabled = var.service_autoscale_enabled
 
   # Service Healthcheck configuration
   use_task_container_healthcheck    = true
