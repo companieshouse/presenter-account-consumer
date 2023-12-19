@@ -19,11 +19,6 @@ locals {
   app_environment_filename   = "presenter-account-consumer.env"
   vpc_name                   = data.aws_ssm_parameter.secret[format("/%s/%s", local.name_prefix, "vpc-name")].value
 
-  # Enable Eric
-  use_eric_reverse_proxy  = true
-  eric_port               = "3001" # container port plus 1
-  eric_version            = "latest"
-
   # create a map of secret name => secret arn to pass into ecs service module
   # using the trimprefix function to remove the prefixed path from the secret name
   secrets_arn_map = {
@@ -68,17 +63,4 @@ locals {
 
   task_environment = concat(local.ssm_global_version_map,local.ssm_service_version_map)
 
-  # Eric secrets config
-  eric_secrets = [
-    { "name" : "AES256_KEY" , "valueFrom" : "${local.service_secrets_arn_map.aes256_key}" },
-    { "name" : "API_KEY" , "valueFrom" : "${local.service_secrets_arn_map.api_key}" },
-    { "name" : "CACHE_URL" , "valueFrom" : "${local.service_secrets_arn_map.cache_url}" }
-  ]
-
-  eric_environment = [
-    { "name": "LOGLEVEL", "value": "${var.log_level}" },
-    { "name": "MODE", "value": "api" },
-    { "name": "ACCOUNT_API_URL", "value" : "${var.account_api_url}" },
-    { "name": "DEVELOPER_HUB_URL", "value" : "${var.developer_hub_url}" }
-  ]
 }
